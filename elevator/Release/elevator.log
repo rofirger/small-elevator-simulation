@@ -1,0 +1,106 @@
+﻿  CelevatorInfo.cpp
+D:\projects\elevator\elevator\elevator\elevator.h(144,21): warning C4018: “<”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\elevator.h(150,10): warning C4018: “<”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\elevator.h(154,15): warning C4018: “>=”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\elevator.h(154,55): warning C4018: “<”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\elevator.h(173,21): warning C4018: “<”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\elevator.h(262,21): warning C4018: “<”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\elevator.h(269,21): warning C4018: “<”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\CelevatorInfo.cpp(67,21): warning C4018: “<”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\CelevatorInfo.cpp(97,20): warning C4018: “<”: 有符号/无符号不匹配
+  CelevatorSHOW.cpp
+D:\projects\elevator\elevator\elevator\elevator.h(144,21): warning C4018: “<”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\elevator.h(150,10): warning C4018: “<”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\elevator.h(154,15): warning C4018: “>=”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\elevator.h(154,55): warning C4018: “<”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\elevator.h(173,21): warning C4018: “<”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\elevator.h(262,21): warning C4018: “<”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\elevator.h(269,21): warning C4018: “<”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.h(48,21): warning C4018: “<”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.h(65,22): warning C4018: “<”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.h(78,23): warning C4018: “<”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.h(96,21): warning C4018: “<”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(97,20): warning C4018: “<”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(120,11): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(121,11): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(125,12): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(126,59): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(128,98): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(130,98): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(131,69): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(135,12): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(136,12): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(138,12): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(139,12): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(141,47): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(143,125): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(145,143): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(147,143): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(149,279): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(151,107): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(159,47): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(161,125): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(163,120): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(165,66): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(167,115): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(169,282): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(171,13): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(180,20): warning C4018: “<”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(314,62): warning C4553: “==”: 未使用表达式结果；是否打算使用“=”?
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(326,22): warning C4018: “<”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(361,22): warning C4018: “<”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(404,79): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(416,73): warning C4244: “=”: 从“int”转换到“_Ty”，可能丢失数据
+          with
+          [
+              _Ty=float
+          ]
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(440,18): warning C4244: “=”: 从“int”转换到“_Ty”，可能丢失数据
+          with
+          [
+              _Ty=float
+          ]
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(476,79): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(487,73): warning C4244: “=”: 从“int”转换到“_Ty”，可能丢失数据
+          with
+          [
+              _Ty=float
+          ]
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(508,18): warning C4244: “=”: 从“int”转换到“_Ty”，可能丢失数据
+          with
+          [
+              _Ty=float
+          ]
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(583,20): warning C4018: “<”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(652,31): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(654,30): warning C4244: “参数”: 从“time_t”转换到“unsigned int”，可能丢失数据
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(668,19): warning C4244: “初始化”: 从“ULONGLONG”转换到“unsigned long”，可能丢失数据
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(682,19): warning C4244: “初始化”: 从“ULONGLONG”转换到“unsigned int”，可能丢失数据
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(683,17): warning C4018: “>=”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(708,23): warning C4018: “<”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(733,21): warning C4018: “<”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(816,20): warning C4018: “<”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(820,81): warning C4244: “参数”: 从“double”转换到“_Ty”，可能丢失数据
+          with
+          [
+              _Ty=float
+          ]
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(864,21): warning C4018: “<=”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(880,21): warning C4018: “<”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(882,22): warning C4018: “<=”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(899,21): warning C4018: “<=”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(915,25): warning C4018: “<=”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(928,105): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(932,102): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(948,21): warning C4018: “<”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(959,21): warning C4018: “<=”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(987,21): warning C4018: “<=”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(1008,21): warning C4018: “<=”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(1028,21): warning C4018: “<=”: 有符号/无符号不匹配
+D:\projects\elevator\elevator\elevator\CelevatorSHOW.cpp(1051,21): warning C4018: “<=”: 有符号/无符号不匹配
+  正在生成代码
+  4 of 1562 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    12 functions had inline decision re-evaluated but remain unchanged
+  已完成代码的生成
+  elevator.vcxproj -> D:\projects\elevator\elevator\Release\elevator.exe
