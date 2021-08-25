@@ -1,10 +1,10 @@
 /*
- * @Author: ÂŞ·É½Ü
+ * @Author: ç½—é£æ°
  * @File: g_a.cpp
  * @Date: 2021-7-10
  * @LastEditTime: 2021-7-30
- * @LastEditors: ÂŞ·É½Ü
- * @brief: µçÌİÈº¿Øµ÷¶ÈºËĞÄËã·¨¡ª¡ªÒÅ´«Ëã·¨
+ * @LastEditors: ç½—é£æ°
+ * @brief: ç”µæ¢¯ç¾¤æ§è°ƒåº¦æ ¸å¿ƒç®—æ³•â€”â€”é—ä¼ ç®—æ³•
  */
 #include <random>
 #include <vector>
@@ -25,34 +25,34 @@ extern bool IS_STOP_ALL;
 using namespace std;
 volatile bool gaIsFinish = false;
 
-// ½»²æ¸ÅÂÊ
+// äº¤å‰æ¦‚ç‡
 const double CROSSOVER_PROBABILITY = 0.75;
-// ±äÒì¸ÅÂÊ
+// å˜å¼‚æ¦‚ç‡
 const double MUTATION_PROBABILITY = 0.1;
-// Ëæ»úÖÖ×Ó
+// éšæœºç§å­
 const unsigned int SEED = 20;
-// ÖÖÈº¹æÄ££¬¿É±ä
+// ç§ç¾¤è§„æ¨¡ï¼Œå¯å˜
 int POPULATION_SIZE = 100;
-// ½ø»¯´úÊı£¬¿É±ä
+// è¿›åŒ–ä»£æ•°ï¼Œå¯å˜
 int NUM_EVOLUTION = 80;
 
-// ¸öÌå
+// ä¸ªä½“
 class Individual
 {
 private:
-	// ĞòÁĞ£¬µçÌİÔÚElevators->elevatorsÊı×éÖĞµÄË÷Òı
+	// åºåˆ—ï¼Œç”µæ¢¯åœ¨Elevators->elevatorsæ•°ç»„ä¸­çš„ç´¢å¼•
 	int* sequence;
-	// ĞòÁĞÖĞÔªËØµÄ¸öÊı
+	// åºåˆ—ä¸­å…ƒç´ çš„ä¸ªæ•°
 	int num;
-	// ÊÊÓ¦¶È
+	// é€‚åº”åº¦
 	double fitness;
-	// ÊÊÓ¦¶È¸ÅÂÊ
+	// é€‚åº”åº¦æ¦‚ç‡
 	double fitnessPro;
-	// ÀÛ¼ÓÊÊÓ¦¶È¸ÅÂÊ
+	// ç´¯åŠ é€‚åº”åº¦æ¦‚ç‡
 	double fitnessSumPro;
 public:
 	Individual(int* paramSequence, Signal* signal);
-	// »ñÈ¡²ÎÊı
+	// è·å–å‚æ•°
 	int* GetSequence()
 	{
 		return sequence;
@@ -69,7 +69,7 @@ public:
 	{
 		return fitnessSumPro;
 	}
-	// ÉèÖÃ²ÎÊı
+	// è®¾ç½®å‚æ•°
 	double SetFitness(const double param)
 	{
 		fitness = param;
@@ -119,44 +119,44 @@ Individual::Individual(int* paramSequence, Signal* pSignal)
 	fitnessSumPro = 0;
 }
 
-// ´æ·Åµ±´ú¸öÌå
+// å­˜æ”¾å½“ä»£ä¸ªä½“
 vector<Individual>nowPopulation;
-// ´æ·ÅÑ¡ÔñºóµÄÖĞ¼ä¸öÌå
+// å­˜æ”¾é€‰æ‹©åçš„ä¸­é—´ä¸ªä½“
 vector<Individual>midPopulation;
-// ´æ·ÅÏÂÒ»´ú¸öÌå
+// å­˜æ”¾ä¸‹ä¸€ä»£ä¸ªä½“
 vector<Individual>nextPopulation;
 
 double random()
 {
 	int n = rand() % 999;
-	// Ëæ»ú²úÉú0µ½1µÄĞ¡Êı
+	// éšæœºäº§ç”Ÿ0åˆ°1çš„å°æ•°
 	return double(n) / 1000.0;
 }
 
-// Éú³É³õÊ¼ÖÖÈº
+// ç”Ÿæˆåˆå§‹ç§ç¾¤
 void Initialize(Elevators* pElevators, Signal* pSignal)
 {
 	int** temp = new int* [POPULATION_SIZE];
 	for (int i = 0; i < POPULATION_SIZE; ++i)
 	{
-		// ´¢´æµÄÊÇ Elevators ÖĞ¸öµçÌİÔÚelevatorsÊı×éÖĞµÄË÷Òı
+		// å‚¨å­˜çš„æ˜¯ Elevators ä¸­ä¸ªç”µæ¢¯åœ¨elevatorsæ•°ç»„ä¸­çš„ç´¢å¼•
 		temp[i] = new int[pSignal->signalNum];
 	}
-	// Ëæ»úÊıÒıÇæ
+	// éšæœºæ•°å¼•æ“
 	default_random_engine e(static_cast<unsigned>(20));
-	// ¶¯Ì¬Éú³É ³£Á¿
+	// åŠ¨æ€ç”Ÿæˆ å¸¸é‡
 	Const num(pElevators->numElevators);
-	// Éú³É[0,  pElevators->numElevators - 1] µÄÊı
+	// ç”Ÿæˆ[0,  pElevators->numElevators - 1] çš„æ•°
 	uniform_int_distribution<int>u(0, num.constNum - 1);
 	for (int i = 0; i < POPULATION_SIZE; ++i)
 	{
 		for (int n = 0; n < pSignal->signalNum; ++n)
 		{
-			// ²»ÏûÖØ£¬Ò»²¿µçÌİ¿ÉÄÜĞèÒªÏìÓ¦¶à¸öĞÅºÅ
+			// ä¸æ¶ˆé‡ï¼Œä¸€éƒ¨ç”µæ¢¯å¯èƒ½éœ€è¦å“åº”å¤šä¸ªä¿¡å·
 			temp[i][n] = u(e);
 		}
 	}
-	// ¼ÓÈë³õÊ¼ÖÖÈº
+	// åŠ å…¥åˆå§‹ç§ç¾¤
 	for (int i = 0; i < POPULATION_SIZE; ++i)
 	{
 		int* tempTemp = new int[pSignal->signalNum];
@@ -168,7 +168,7 @@ void Initialize(Elevators* pElevators, Signal* pSignal)
 		nowPopulation.push_back(individual);
 		delete[]tempTemp;
 	}
-	// ¶¯Ì¬ÄÚ´æÊÍ·Å
+	// åŠ¨æ€å†…å­˜é‡Šæ”¾
 	for (int i = 0; i < POPULATION_SIZE; ++i)
 	{
 		delete[]temp[i];
@@ -176,7 +176,7 @@ void Initialize(Elevators* pElevators, Signal* pSignal)
 	delete[]temp;
 }
 
-// ÖĞ¼äº¯Êı£¬ÆäËûº¯ÊıÎğµ÷ÓÃ
+// ä¸­é—´å‡½æ•°ï¼Œå…¶ä»–å‡½æ•°å‹¿è°ƒç”¨
 double CalDistanceTime(double s, double totalTime, double tempTime, double distNodeConstant, double distNodeMaxAcce, Elevators* pElevators, unsigned int elevatorIndex)
 {
 	if (s < distNodeMaxAcce)
@@ -199,19 +199,19 @@ double CalDistanceTime(double s, double totalTime, double tempTime, double distN
 	return totalTime;
 }
 
-// ¼ÆËãµçÌİÄÚÈË³ËÌİÊ±¼ä
+// è®¡ç®—ç”µæ¢¯å†…äººä¹˜æ¢¯æ—¶é—´
 double CaculateTakeTime(Elevators* pElevators, unsigned int elevatorIndex, BuildingParam* pBuildingParam)
 {
-	// ¼ÙÉè³ËÌİÊ±¼äÎª 0s Ê±ÆÀ¼ÛÖµÎª1£¬ ³ËÌİÊ±¼äÎª90ÃëÊ±ÆÀ¼Ûº¯ÊıÖµÎª0.001
+	// å‡è®¾ä¹˜æ¢¯æ—¶é—´ä¸º 0s æ—¶è¯„ä»·å€¼ä¸º1ï¼Œ ä¹˜æ¢¯æ—¶é—´ä¸º90ç§’æ—¶è¯„ä»·å‡½æ•°å€¼ä¸º0.001
 	double totalTime = 0;
 	int lastDistFloorIndex = pElevators->elevators[elevatorIndex].elevatorStatus.distFloors.size() - 1;
-	// ¸ÃÊ±¼äµÄÒâÒåÊÇµçÌİÔÚÃ¿Ò»Ä¿µÄ²ãËùÍ£ÁôµÄÊ±¼ä
+	// è¯¥æ—¶é—´çš„æ„ä¹‰æ˜¯ç”µæ¢¯åœ¨æ¯ä¸€ç›®çš„å±‚æ‰€åœç•™çš„æ—¶é—´
 	double tempTime = (double)pElevators->elevators[elevatorIndex].elevatorParam.timeOfWait + (double)pElevators->elevators[elevatorIndex].elevatorParam.timeOfOpenDoor
 		+ (double)pElevators->elevators[elevatorIndex].elevatorParam.timeOfCloseDoor + (double)pElevators->elevators[elevatorIndex].elevatorParam.timeOfBrake;
-	// µçÌİÄÜ´ïµ½¶î¶¨ËÙ¶ÈµÄ¾àÀë½Úµã
+	// ç”µæ¢¯èƒ½è¾¾åˆ°é¢å®šé€Ÿåº¦çš„è·ç¦»èŠ‚ç‚¹
 	double distNodeConstant = (pow(pElevators->elevators[elevatorIndex].elevatorParam.ratedAcceleration, 2) * pElevators->elevators[elevatorIndex].elevatorParam.ratedSpeed + pow(pElevators->elevators[elevatorIndex].elevatorParam.ratedSpeed, 2) * pElevators->elevators[elevatorIndex].elevatorParam.ratedJerk) /
 		((double)pElevators->elevators[elevatorIndex].elevatorParam.ratedAcceleration * pElevators->elevators[elevatorIndex].elevatorParam.ratedJerk);
-	// µçÌİÄÜ´ïµ½×î´óÔËĞĞ¼ÓËÙ¶ÈµÄ¾àÀë½Úµã
+	// ç”µæ¢¯èƒ½è¾¾åˆ°æœ€å¤§è¿è¡ŒåŠ é€Ÿåº¦çš„è·ç¦»èŠ‚ç‚¹
 	double distNodeMaxAcce = pow(pElevators->elevators[elevatorIndex].elevatorParam.ratedAcceleration, 3) * 2 / pow(pElevators->elevators[elevatorIndex].elevatorParam.ratedJerk, 2);
 
 	typedef struct Distance
@@ -226,9 +226,9 @@ double CaculateTakeTime(Elevators* pElevators, unsigned int elevatorIndex, Build
 	case UP:
 	{
 		double s = 0;
-		// ³õÊ¼²¿·Ö
-		s = pBuildingParam->storeyHeight * ABS(pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[0].dist - pElevators->elevators[elevatorIndex].elevatorStatus.presentFloor);
-		// µÚÒ»²¿·ÖÇ°ËùÓÃµÄÊ±¼ä
+		// åˆå§‹éƒ¨åˆ†
+		s = static_cast<double>(pBuildingParam->storeyHeight) * static_cast<double>(ABS(pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[0].dist - pElevators->elevators[elevatorIndex].elevatorStatus.presentFloor));
+		// ç¬¬ä¸€éƒ¨åˆ†å‰æ‰€ç”¨çš„æ—¶é—´
 		double initialPartTime = CalDistanceTime(s, totalTime, tempTime, distNodeConstant, distNodeMaxAcce, pElevators, elevatorIndex);
 
 		for (int i = 0; i < pElevators->elevators[elevatorIndex].elevatorStatus.distFloors.size(); ++i)
@@ -236,7 +236,7 @@ double CaculateTakeTime(Elevators* pElevators, unsigned int elevatorIndex, Build
 			if (pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[i].type == INTERN)
 			{
 				s = 0;
-				// ¼ÆËã¸÷ÄÚ²¿ĞÅºÅ²ãµ½µçÌİÄ¿Ç°ËùÔÚ²ãµÄ¾àÀë
+				// è®¡ç®—å„å†…éƒ¨ä¿¡å·å±‚åˆ°ç”µæ¢¯ç›®å‰æ‰€åœ¨å±‚çš„è·ç¦»
 				Distance tempDistance;
 				tempDistance.whatFloor = pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[i].dist;
 				tempDistance.time = 0;
@@ -244,7 +244,7 @@ double CaculateTakeTime(Elevators* pElevators, unsigned int elevatorIndex, Build
 
 				while (j > 0)
 				{
-					s = pBuildingParam->storeyHeight * ABS(pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[j].dist - pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[j - 1].dist);
+					s = static_cast<double>(pBuildingParam->storeyHeight) * static_cast<double>(ABS(pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[j].dist - pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[j - 1].dist));
 					tempDistance.time += CalDistanceTime(s, totalTime, tempTime, distNodeConstant, distNodeMaxAcce, pElevators, elevatorIndex);
 					j--;
 				}
@@ -256,7 +256,7 @@ double CaculateTakeTime(Elevators* pElevators, unsigned int elevatorIndex, Build
 	}
 	case DOWN:
 	{
-		// Ñ°ÕÒ·Ö¸îµã, µÚÒ»²¿·Ö·Ö¸îµã
+		// å¯»æ‰¾åˆ†å‰²ç‚¹, ç¬¬ä¸€éƒ¨åˆ†åˆ†å‰²ç‚¹
 		int presentFloor = pElevators->elevators[elevatorIndex].elevatorStatus.presentFloor;
 		int intialFirstPoint = 0;
 		for (int i = 0; i < pElevators->elevators[elevatorIndex].elevatorStatus.distFloors.size(); ++i)
@@ -269,9 +269,9 @@ double CaculateTakeTime(Elevators* pElevators, unsigned int elevatorIndex, Build
 		}
 
 		double s = 0;
-		// ³õÊ¼²¿·Ö
-		s = pBuildingParam->storeyHeight * ABS(pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[intialFirstPoint].dist - pElevators->elevators[elevatorIndex].elevatorStatus.presentFloor);
-		// µÚÒ»²¿·ÖÇ°ËùÓÃµÄÊ±¼ä
+		// åˆå§‹éƒ¨åˆ†
+		s = static_cast<double>(pBuildingParam->storeyHeight) * static_cast<double>(ABS(pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[intialFirstPoint].dist - pElevators->elevators[elevatorIndex].elevatorStatus.presentFloor));
+		// ç¬¬ä¸€éƒ¨åˆ†å‰æ‰€ç”¨çš„æ—¶é—´
 		double initialPartTime = CalDistanceTime(s, totalTime, tempTime, distNodeConstant, distNodeMaxAcce, pElevators, elevatorIndex);
 
 		for (int i = intialFirstPoint; i > 0; --i)
@@ -279,15 +279,15 @@ double CaculateTakeTime(Elevators* pElevators, unsigned int elevatorIndex, Build
 			if (pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[i].type == INTERN)
 			{
 				s = 0;
-				// ¼ÆËã¸÷ÄÚ²¿ĞÅºÅ²ãµ½µçÌİÄ¿Ç°ËùÔÚ²ãµÄ¾àÀë
+				// è®¡ç®—å„å†…éƒ¨ä¿¡å·å±‚åˆ°ç”µæ¢¯ç›®å‰æ‰€åœ¨å±‚çš„è·ç¦»
 				Distance tempDistance;
 				tempDistance.whatFloor = pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[i].dist;
 				tempDistance.time = 0;
 				int j = i;
-				double s = (double)pBuildingParam->storeyHeight * (pElevators->elevators[elevatorIndex].elevatorStatus.presentFloor - pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[intialFirstPoint].dist);
+				double s = static_cast<double>(pBuildingParam->storeyHeight) * static_cast<double>(pElevators->elevators[elevatorIndex].elevatorStatus.presentFloor - pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[intialFirstPoint].dist);
 				while (j <= intialFirstPoint)
 				{
-					s = pBuildingParam->storeyHeight * ABS(pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[j].dist - pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[j - 1].dist);
+					s = static_cast<double>(pBuildingParam->storeyHeight) * static_cast<double>(ABS(pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[j].dist - pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[j - 1].dist));
 					tempDistance.time += CalDistanceTime(s, totalTime, tempTime, distNodeConstant, distNodeMaxAcce, pElevators, elevatorIndex);
 					j++;
 				}
@@ -301,7 +301,7 @@ double CaculateTakeTime(Elevators* pElevators, unsigned int elevatorIndex, Build
 		break;
 	}
 
-	// ²éÕÒ
+	// æŸ¥æ‰¾
 	for (int i = 0; i < pElevators->elevators[elevatorIndex].elevatorStatus.person.size(); ++i)
 	{
 		for (int j = 0; j < temp.size(); ++j)
@@ -317,29 +317,29 @@ double CaculateTakeTime(Elevators* pElevators, unsigned int elevatorIndex, Build
 	return ret;
 }
 
-// ¼ÆËãµÈ´ıÊ±¼äÆÀ¼Ûº¯ÊıÖµ
+// è®¡ç®—ç­‰å¾…æ—¶é—´è¯„ä»·å‡½æ•°å€¼
 double CalculateWaitTime(Elevators* pElevators, unsigned int elevatorIndex, BuildingParam* pBuildingParam)
 {
-	// ¼ÙÉèµÈ´ıÊ±¼äÎª 0s Ê±ÆÀ¼ÛÖµÎª1£¬ µÈ´ıÊ±¼äÎª60ÃëÊ±ÆÀ¼Ûº¯ÊıÖµÎª0.001
-	// È«²¿Íâ²¿ĞÅºÅµÄµÈ´ıÊ±¼äÖ®ºÍ
+	// å‡è®¾ç­‰å¾…æ—¶é—´ä¸º 0s æ—¶è¯„ä»·å€¼ä¸º1ï¼Œ ç­‰å¾…æ—¶é—´ä¸º60ç§’æ—¶è¯„ä»·å‡½æ•°å€¼ä¸º0.001
+	// å…¨éƒ¨å¤–éƒ¨ä¿¡å·çš„ç­‰å¾…æ—¶é—´ä¹‹å’Œ
 	double totalTime = 0;
 	int lastDistFloorIndex = pElevators->elevators[elevatorIndex].elevatorStatus.distFloors.size() - 1;
 	double tempTime = (double)pElevators->elevators[elevatorIndex].elevatorParam.timeOfWait + (double)pElevators->elevators[elevatorIndex].elevatorParam.timeOfOpenDoor
 		+ (double)pElevators->elevators[elevatorIndex].elevatorParam.timeOfCloseDoor + (double)pElevators->elevators[elevatorIndex].elevatorParam.timeOfBrake;
-	// µçÌİÄÜ´ïµ½¶î¶¨ËÙ¶ÈµÄ¾àÀë½Úµã
+	// ç”µæ¢¯èƒ½è¾¾åˆ°é¢å®šé€Ÿåº¦çš„è·ç¦»èŠ‚ç‚¹
 	double distNodeConstant = (pow(pElevators->elevators[elevatorIndex].elevatorParam.ratedAcceleration, 2) * pElevators->elevators[elevatorIndex].elevatorParam.ratedSpeed + pow(pElevators->elevators[elevatorIndex].elevatorParam.ratedSpeed, 2) * pElevators->elevators[elevatorIndex].elevatorParam.ratedJerk) /
 		((double)pElevators->elevators[elevatorIndex].elevatorParam.ratedAcceleration * pElevators->elevators[elevatorIndex].elevatorParam.ratedJerk);
-	// µçÌİÄÜ´ïµ½×î´óÔËĞĞ¼ÓËÙ¶ÈµÄ¾àÀë½Úµã
+	// ç”µæ¢¯èƒ½è¾¾åˆ°æœ€å¤§è¿è¡ŒåŠ é€Ÿåº¦çš„è·ç¦»èŠ‚ç‚¹
 	double distNodeMaxAcce = pow(pElevators->elevators[elevatorIndex].elevatorParam.ratedAcceleration, 3) * 2 / pow(pElevators->elevators[elevatorIndex].elevatorParam.ratedJerk, 2);
 	switch (pElevators->elevators[elevatorIndex].elevatorStatus.dir)
 	{
 	case UP:
 	{
 		double s = 0;
-		// µÚÒ»²¿·ÖÇ°ËùÓÃµÄÊ±¼ä
+		// ç¬¬ä¸€éƒ¨åˆ†å‰æ‰€ç”¨çš„æ—¶é—´
 		double initialPartTime = 0;
-		s = pBuildingParam->storeyHeight * ABS(pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[0].dist - pElevators->elevators[elevatorIndex].elevatorStatus.presentFloor);
-		// ÎŞÂÛµÚÒ»²¿·ÖÓĞÃ»ÓĞ¶¼ÓĞÕâÒ»²¿·ÖµÄÊ±¼ä
+		s = static_cast<double>(pBuildingParam->storeyHeight) * static_cast<double>(ABS(pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[0].dist - pElevators->elevators[elevatorIndex].elevatorStatus.presentFloor));
+		// æ— è®ºç¬¬ä¸€éƒ¨åˆ†æœ‰æ²¡æœ‰éƒ½æœ‰è¿™ä¸€éƒ¨åˆ†çš„æ—¶é—´
 		initialPartTime = CalDistanceTime(s, totalTime, tempTime, distNodeConstant, distNodeMaxAcce, pElevators, elevatorIndex);
 		if (pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[0].type == EXTERN_DOWN)
 		{
@@ -358,8 +358,8 @@ double CalculateWaitTime(Elevators* pElevators, unsigned int elevatorIndex, Buil
 				int j = i;
 				while (j > 0)
 				{
-					s = pBuildingParam->storeyHeight * ABS(pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[j].dist - pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[j - 1].dist);
-					// s = 0 Ê±²»±Ø¼ÓÉÏtempTime
+					s = static_cast<double>(pBuildingParam->storeyHeight) * static_cast<double>(ABS(pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[j].dist - pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[j - 1].dist));
+					// s = 0 æ—¶ä¸å¿…åŠ ä¸ŠtempTime
 					if (s != 0)
 					{
 						totalTime += CalDistanceTime(s, totalTime, tempTime, distNodeConstant, distNodeMaxAcce, pElevators, elevatorIndex);
@@ -384,7 +384,7 @@ double CalculateWaitTime(Elevators* pElevators, unsigned int elevatorIndex, Buil
 	{
 		int presentFloor = pElevators->elevators[elevatorIndex].elevatorStatus.presentFloor;
 		bool isHaveFirstPart = false;
-		// Ñ°ÕÒ·Ö¸îµã, µÚÒ»²¿·Ö·Ö¸îµã
+		// å¯»æ‰¾åˆ†å‰²ç‚¹, ç¬¬ä¸€éƒ¨åˆ†åˆ†å‰²ç‚¹
 		int intialFirstPoint = 0;
 		for (int i = 0; i < pElevators->elevators[elevatorIndex].elevatorStatus.distFloors.size(); ++i)
 		{
@@ -397,32 +397,32 @@ double CalculateWaitTime(Elevators* pElevators, unsigned int elevatorIndex, Buil
 		}
 
 		double s = 0;
-		// µÚÒ»²¿·ÖËùÓÃµÄÊ±¼ä
+		// ç¬¬ä¸€éƒ¨åˆ†æ‰€ç”¨çš„æ—¶é—´
 		double firstPartTime = 0;
-		// µÚÒ»²¿·ÖÇ°ËùÓÃµÄÊ±¼ä
+		// ç¬¬ä¸€éƒ¨åˆ†å‰æ‰€ç”¨çš„æ—¶é—´
 		double initialPartTime = 0;
-		s = ABS(pElevators->elevators[elevatorIndex].elevatorStatus.presentFloor - pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[0].dist) * pBuildingParam->storeyHeight;
-		// ÎŞÂÛÓĞÃ»ÓĞµÚÒ»²¿·Ö¶¼ÓĞÕâ¶ÎÊ±¼ä
+		s = static_cast<double>(ABS(pElevators->elevators[elevatorIndex].elevatorStatus.presentFloor - pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[0].dist)) * static_cast<double>(pBuildingParam->storeyHeight);
+		// æ— è®ºæœ‰æ²¡æœ‰ç¬¬ä¸€éƒ¨åˆ†éƒ½æœ‰è¿™æ®µæ—¶é—´
 		initialPartTime = CalDistanceTime(s, totalTime, tempTime, distNodeConstant, distNodeMaxAcce, pElevators, elevatorIndex);
 		if (pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[0].type == EXTERN_DOWN && pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[0].dist < presentFloor)
 		{
-			// ´ËÇé¿öÏÂÄ¬ÈÏ´æÔÚµÚÒ»²¿·Ö
+			// æ­¤æƒ…å†µä¸‹é»˜è®¤å­˜åœ¨ç¬¬ä¸€éƒ¨åˆ†
 			totalTime -= tempTime;
 		}
 		else if (pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[0].type == EXTERN_DOWN && pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[0].dist >= presentFloor)
 		{
-			// ²»´æÔÚµÚÒ»²¿·Ö
+			// ä¸å­˜åœ¨ç¬¬ä¸€éƒ¨åˆ†
 			totalTime += CalDistanceTime(s, totalTime, tempTime, distNodeConstant, distNodeMaxAcce, pElevators, elevatorIndex) + pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[0].waitTimeOfDOWN - tempTime;
 		}
 		else if (pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[0].type == EXTERN_UP)
 		{
-			// ²»´æÔÚµÚÒ»²¿·Ö
+			// ä¸å­˜åœ¨ç¬¬ä¸€éƒ¨åˆ†
 			totalTime += CalDistanceTime(s, totalTime, tempTime, distNodeConstant, distNodeMaxAcce, pElevators, elevatorIndex) + pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[0].waitTimeOfUP - tempTime;
 		}
 
 		if (isHaveFirstPart)
 		{
-			// ¼ÆËãµÚÒ»²¿·ÖÍâ²¿ĞÅºÅ³Ë¿ÍµÈ´ıÊ±¼ä
+			// è®¡ç®—ç¬¬ä¸€éƒ¨åˆ†å¤–éƒ¨ä¿¡å·ä¹˜å®¢ç­‰å¾…æ—¶é—´
 			for (int i = intialFirstPoint; i >= 0; --i)
 			{
 				if (pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[i].type == EXTERN_DOWN || pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[i].type == EXTERN_UP)
@@ -431,8 +431,8 @@ double CalculateWaitTime(Elevators* pElevators, unsigned int elevatorIndex, Buil
 					int j = i;
 					while (j < intialFirstPoint)
 					{
-						s = pBuildingParam->storeyHeight * ABS(pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[j + 1].dist - pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[j].dist);
-						// s = 0 Ê±²»±Ø¼ÓÉÏtempTime
+						s = static_cast<double>(pBuildingParam->storeyHeight) * static_cast<double>(ABS(pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[j + 1].dist - pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[j].dist));
+						// s = 0 æ—¶ä¸å¿…åŠ ä¸ŠtempTime
 						if (s != 0)
 						{
 							totalTime += CalDistanceTime(s, totalTime, tempTime, distNodeConstant, distNodeMaxAcce, pElevators, elevatorIndex);
@@ -451,11 +451,11 @@ double CalculateWaitTime(Elevators* pElevators, unsigned int elevatorIndex, Buil
 					}
 				}
 			}
-			s = ABS(pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[intialFirstPoint].dist - pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[0].dist) * pBuildingParam->storeyHeight;
+			s = static_cast<double>(ABS(pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[intialFirstPoint].dist - pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[0].dist)) * static_cast<double>(pBuildingParam->storeyHeight);
 			firstPartTime = CalDistanceTime(s, totalTime, tempTime, distNodeConstant, distNodeMaxAcce, pElevators, elevatorIndex);
 		}
 
-		// ¼ÆËãµÚ¶ş²¿·Ö¡¢µÚÈı²¿·ÖÍâ²¿ĞÅºÅ³Ë¿ÍµÈ´ıÊ±¼ä
+		// è®¡ç®—ç¬¬äºŒéƒ¨åˆ†ã€ç¬¬ä¸‰éƒ¨åˆ†å¤–éƒ¨ä¿¡å·ä¹˜å®¢ç­‰å¾…æ—¶é—´
 		for (int i = intialFirstPoint + 1; i < pElevators->elevators[elevatorIndex].elevatorStatus.distFloors.size(); ++i)
 		{
 			if (pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[i].type == EXTERN_DOWN || pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[i].type == EXTERN_UP)
@@ -464,8 +464,8 @@ double CalculateWaitTime(Elevators* pElevators, unsigned int elevatorIndex, Buil
 				int j = i;
 				while (j > intialFirstPoint + 1)
 				{
-					s = pBuildingParam->storeyHeight * ABS(pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[j].dist - pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[j - 1].dist);
-					// s = 0 Ê±²»±Ø¼ÓÉÏtempTime
+					s = static_cast<double>(pBuildingParam->storeyHeight) * static_cast<double>(ABS(pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[j].dist - pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[j - 1].dist));
+					// s = 0 æ—¶ä¸å¿…åŠ ä¸ŠtempTime
 					if (s != 0)
 					{
 						totalTime += CalDistanceTime(s, totalTime, tempTime, distNodeConstant, distNodeMaxAcce, pElevators, elevatorIndex);
@@ -495,23 +495,23 @@ double CalculateWaitTime(Elevators* pElevators, unsigned int elevatorIndex, Buil
 	return ret;
 }
 
-// ¼ÆËãÓµ¼·ÆÀ¼Ûº¯ÊıÖµ
+// è®¡ç®—æ‹¥æŒ¤è¯„ä»·å‡½æ•°å€¼
 double CaculateComfort(Elevators* pElevators, unsigned int elevatorIndex)
 {
-	// ¼ÙÉèµçÌİÄÚµÄÈËÊıÎª 0 Ê±ÊæÊÊ¶ÈÎª1£¬ÈËÊıÎª¶î¶¨ÈËÊıÊ±ÊæÊÊ¶ÈÎª0.001£¬Âú×ã e Ö¸Êı¼¶±ä»¯
+	// å‡è®¾ç”µæ¢¯å†…çš„äººæ•°ä¸º 0 æ—¶èˆ’é€‚åº¦ä¸º1ï¼Œäººæ•°ä¸ºé¢å®šäººæ•°æ—¶èˆ’é€‚åº¦ä¸º0.001ï¼Œæ»¡è¶³ e æŒ‡æ•°çº§å˜åŒ–
 	double x = 3 * log(10) / pow(pElevators->elevators[elevatorIndex].elevatorParam.ratedCapacity, 2);
 	double ret = exp(-x * pElevators->elevators[elevatorIndex].elevatorStatus.person.size());
 	return ret;
 }
 
-// ¼ÆËãÄÜºÄÆÀ¼Ûº¯ÊıÖµ
+// è®¡ç®—èƒ½è€—è¯„ä»·å‡½æ•°å€¼
 double CaculateEnergyConsume(Elevators* pElevators, unsigned int elevatorIndex)
 {
 	int num = 0;
-	// ¸ù¾İÍ£²ã´ÎÊıÀ´ÅĞ¶¨, ¼ÙÉèÍ£²ã´ÎÊıÎª5´ÎÊ±ÆÀ¼Ûº¯ÊıÖµÎª0.01
+	// æ ¹æ®åœå±‚æ¬¡æ•°æ¥åˆ¤å®š, å‡è®¾åœå±‚æ¬¡æ•°ä¸º5æ¬¡æ—¶è¯„ä»·å‡½æ•°å€¼ä¸º0.01
 	for (int i = 1; i < pElevators->elevators[elevatorIndex].elevatorStatus.distFloors.size(); ++i)
 	{
-		// ±Ü¿ªÖØ¸´
+		// é¿å¼€é‡å¤
 		if (pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[i].dist != pElevators->elevators[elevatorIndex].elevatorStatus.distFloors[i - 1].dist)
 		{
 			num++;
@@ -525,9 +525,9 @@ Elevators* InsertExternSignal(Elevators* pTempElevator, int* sequence, int seque
 {
 	mtx.lock();
 	int index = sequence[sequenceIndex];
-	// ĞÂÍâ²¿ĞÅºÅ³õÊ¼»¯
+	// æ–°å¤–éƒ¨ä¿¡å·åˆå§‹åŒ–
 	DistFloor tempDist;
-	// Íâ²¿ĞÅºÅ²ã
+	// å¤–éƒ¨ä¿¡å·å±‚
 	tempDist.dist = pSignal->externSignal[sequenceIndex].floors;
 	if (!isIntern)
 	{
@@ -544,26 +544,26 @@ Elevators* InsertExternSignal(Elevators* pTempElevator, int* sequence, int seque
 	{
 		tempDist.type = INTERN;
 	}
-	// ĞÂÍâ²¿ĞÅºÅµÈ´ıÊ±¼ä³õÊ¼»¯
+	// æ–°å¤–éƒ¨ä¿¡å·ç­‰å¾…æ—¶é—´åˆå§‹åŒ–
 	tempDist.waitTimeOfDOWN = 0;
 	tempDist.waitTimeOfUP = 0;
 
-	// ĞÂÍâ²¿ĞÅºÅ²åÈë
+	// æ–°å¤–éƒ¨ä¿¡å·æ’å…¥
 	switch (pTempElevator->elevators[index].elevatorStatus.dir)
 	{
-		// ´ËÇé¿öÏÂµçÌİÄ¿µÄ²ã¼¯±Ø¶¨´æÔÚµÚÒ»²¿·Ö
+		// æ­¤æƒ…å†µä¸‹ç”µæ¢¯ç›®çš„å±‚é›†å¿…å®šå­˜åœ¨ç¬¬ä¸€éƒ¨åˆ†
 	case UP:
 	{
 		switch (tempDist.type)
 		{
 		case EXTERN_UP:
 		{
-			// ¹æÔò£ºµçÌİÏìÓ¦ĞÅºÅ¼¯·ÖÎªÈı¸ö²¿·Ö
-			// Íâ²¿ĞÅºÅ²ãÔÚµçÌİµ±Ç°Ëù´¦²ãÖ®ÉÏ£¬²åÈëµÚÒ»²¿·Ö
+			// è§„åˆ™ï¼šç”µæ¢¯å“åº”ä¿¡å·é›†åˆ†ä¸ºä¸‰ä¸ªéƒ¨åˆ†
+			// å¤–éƒ¨ä¿¡å·å±‚åœ¨ç”µæ¢¯å½“å‰æ‰€å¤„å±‚ä¹‹ä¸Šï¼Œæ’å…¥ç¬¬ä¸€éƒ¨åˆ†
 			if (tempDist.dist > pTempElevator->elevators[index].elevatorStatus.presentFloor)
 			{
-				// µÚÒ»²¿·Ö
-				// µü´úÆ÷³õÊ¼»¯
+				// ç¬¬ä¸€éƒ¨åˆ†
+				// è¿­ä»£å™¨åˆå§‹åŒ–
 				vector<DistFloor>::iterator distIter = pTempElevator->elevators[index].elevatorStatus.distFloors.begin();
 				int presentFloor = pTempElevator->elevators[index].elevatorStatus.presentFloor;
 				int numOfFloor = pTempElevator->elevators[index].elevatorStatus.distFloors.size();
@@ -582,15 +582,15 @@ Elevators* InsertExternSignal(Elevators* pTempElevator, int* sequence, int seque
 
 				break;
 			}
-			// Íâ²¿ĞÅºÅ²ãÔÚµçÌİµ±Ç°ËùÔÚ²ãÖ®ÏÂ£¬²åÈëµ½µÚÈı²¿·Ö
+			// å¤–éƒ¨ä¿¡å·å±‚åœ¨ç”µæ¢¯å½“å‰æ‰€åœ¨å±‚ä¹‹ä¸‹ï¼Œæ’å…¥åˆ°ç¬¬ä¸‰éƒ¨åˆ†
 			else
 			{
 				/*
-				* ¹æÔò£ºµçÌİÏìÓ¦ĞÅºÅ¼¯·ÖÎªÈı¸ö²¿·Ö µ±tempElevator.elevators[index].elevatorStatus.dir == UP ÇÒ tempDist.type == EXTERN_UP£¬¸ÃÍâ²¿ĞÅºÅ½«±»ÒıÈë
-				* µÚÈı²¿·Ö£» µ±tempElevator.elevators[index].elevatorStatus.dir == UP ÇÒ tempDist.type == EXTERN_DOWN, ¸ÃÍâ²¿ĞÅºÅ½«±»ÒıÈëµÚ¶ş²¿·Ö
+				* è§„åˆ™ï¼šç”µæ¢¯å“åº”ä¿¡å·é›†åˆ†ä¸ºä¸‰ä¸ªéƒ¨åˆ† å½“tempElevator.elevators[index].elevatorStatus.dir == UP ä¸” tempDist.type == EXTERN_UPï¼Œè¯¥å¤–éƒ¨ä¿¡å·å°†è¢«å¼•å…¥
+				* ç¬¬ä¸‰éƒ¨åˆ†ï¼› å½“tempElevator.elevators[index].elevatorStatus.dir == UP ä¸” tempDist.type == EXTERN_DOWN, è¯¥å¤–éƒ¨ä¿¡å·å°†è¢«å¼•å…¥ç¬¬äºŒéƒ¨åˆ†
 				*/
-				// µÚÈı²¿·Ö
-				// µü´úÆ÷³õÊ¼»¯
+				// ç¬¬ä¸‰éƒ¨åˆ†
+				// è¿­ä»£å™¨åˆå§‹åŒ–
 				vector<DistFloor>::iterator distIter = pTempElevator->elevators[index].elevatorStatus.distFloors.begin();
 				int presentFloor = pTempElevator->elevators[index].elevatorStatus.presentFloor;
 				int numOfFloor = pTempElevator->elevators[index].elevatorStatus.distFloors.size();
@@ -613,7 +613,7 @@ Elevators* InsertExternSignal(Elevators* pTempElevator, int* sequence, int seque
 		}
 		case EXTERN_DOWN:
 		{
-			// ²åÈëµ½µÚ¶ş²¿·Ö
+			// æ’å…¥åˆ°ç¬¬äºŒéƒ¨åˆ†
 			vector<DistFloor>::iterator distIter = pTempElevator->elevators[index].elevatorStatus.distFloors.begin();
 			int ii = 0;
 			int presentFloor = pTempElevator->elevators[index].elevatorStatus.presentFloor;
@@ -623,7 +623,7 @@ Elevators* InsertExternSignal(Elevators* pTempElevator, int* sequence, int seque
 				(pTempElevator->elevators[index].elevatorStatus.distFloors[ii].type == EXTERN_DOWN && pTempElevator->elevators[index].elevatorStatus.distFloors[ii].dist > tempDist.dist))
 			{
 				ii++;
-				// ²»´æÔÚµÚ¶ş²¿·ÖÓëµÚÈı²¿·Ö
+				// ä¸å­˜åœ¨ç¬¬äºŒéƒ¨åˆ†ä¸ç¬¬ä¸‰éƒ¨åˆ†
 				if (ii == numOfFloor)
 				{
 					break;
@@ -636,7 +636,7 @@ Elevators* InsertExternSignal(Elevators* pTempElevator, int* sequence, int seque
 		}
 		case INTERN:
 		{
-			// ²åÈëµ½µÚÒ»²¿·Ö
+			// æ’å…¥åˆ°ç¬¬ä¸€éƒ¨åˆ†
 			vector<DistFloor>::iterator distIter = pTempElevator->elevators[index].elevatorStatus.distFloors.begin();
 			int ii = 0;
 			int dist = tempDist.dist;
@@ -661,7 +661,7 @@ Elevators* InsertExternSignal(Elevators* pTempElevator, int* sequence, int seque
 	{
 		int presentFloor = pTempElevator->elevators[index].elevatorStatus.presentFloor;
 		bool isHaveFirstPart = false;
-		// Ñ°ÕÒ·Ö¸îµã, µÚÒ»²¿·Ö·Ö¸îµã
+		// å¯»æ‰¾åˆ†å‰²ç‚¹, ç¬¬ä¸€éƒ¨åˆ†åˆ†å‰²ç‚¹
 		int intialFirstPoint = 0;
 		for (int i = 0; i < pTempElevator->elevators[index].elevatorStatus.distFloors.size(); ++i)
 		{
@@ -677,11 +677,11 @@ Elevators* InsertExternSignal(Elevators* pTempElevator, int* sequence, int seque
 		{
 		case EXTERN_DOWN:
 		{
-			// µü´úÆ÷³õÊ¼»¯
+			// è¿­ä»£å™¨åˆå§‹åŒ–
 			vector<DistFloor>::iterator distIter = pTempElevator->elevators[index].elevatorStatus.distFloors.begin();
 			int presentFloor = pTempElevator->elevators[index].elevatorStatus.presentFloor;
 			int numOfFloor = pTempElevator->elevators[index].elevatorStatus.distFloors.size();
-			// ²åÈëµ½µÚÒ»²¿·Ö
+			// æ’å…¥åˆ°ç¬¬ä¸€éƒ¨åˆ†
 			if (tempDist.dist < presentFloor)
 			{
 				int ii = 0;
@@ -699,7 +699,7 @@ Elevators* InsertExternSignal(Elevators* pTempElevator, int* sequence, int seque
 
 				break;
 			}
-			// ²åÈëµ½µÚÈı²¿·Ö
+			// æ’å…¥åˆ°ç¬¬ä¸‰éƒ¨åˆ†
 			else
 			{
 				vector<DistFloor>::iterator distIter = pTempElevator->elevators[index].elevatorStatus.distFloors.begin();
@@ -725,8 +725,8 @@ Elevators* InsertExternSignal(Elevators* pTempElevator, int* sequence, int seque
 		}
 		case EXTERN_UP:
 		{
-			// µÚ¶ş²¿·Ö
-			// µü´úÆ÷³õÊ¼»¯
+			// ç¬¬äºŒéƒ¨åˆ†
+			// è¿­ä»£å™¨åˆå§‹åŒ–
 			vector<DistFloor>::iterator distIter = pTempElevator->elevators[index].elevatorStatus.distFloors.begin();
 			int presentFloor = pTempElevator->elevators[index].elevatorStatus.presentFloor;
 			int numOfFloor = pTempElevator->elevators[index].elevatorStatus.distFloors.size();
@@ -748,7 +748,7 @@ Elevators* InsertExternSignal(Elevators* pTempElevator, int* sequence, int seque
 		}
 		case INTERN:
 		{
-			// ²åÈëµ½µÚÒ»²¿·Ö
+			// æ’å…¥åˆ°ç¬¬ä¸€éƒ¨åˆ†
 			vector<DistFloor>::iterator distIter = pTempElevator->elevators[index].elevatorStatus.distFloors.begin();
 			int ii = 0;
 			int dist = tempDist.dist;
@@ -773,7 +773,7 @@ Elevators* InsertExternSignal(Elevators* pTempElevator, int* sequence, int seque
 	case STATIC:
 	{
 		pTempElevator->elevators[index].elevatorStatus.distFloors.push_back(tempDist);
-		// µçÌİÔËĞĞ·½Ïò¸ü¸Ä
+		// ç”µæ¢¯è¿è¡Œæ–¹å‘æ›´æ”¹
 		if (pTempElevator->elevators[index].elevatorStatus.presentFloor < tempDist.dist)
 		{
 			pTempElevator->elevators[index].elevatorStatus.dir = UP;
@@ -792,11 +792,11 @@ Elevators* InsertExternSignal(Elevators* pTempElevator, int* sequence, int seque
 }
 
 /*
-* note:::::: µçÌİÔÚ¶ÁÈ¡ĞÅºÅ¼¯Ê±×¢Òâ´¦Àí´ÓºÎ´¦¿ªÊ¼¶ÁĞÅºÅ¼¯£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡
-* ¹æÔò£ºÍâ²¿ĞÅºÅÄ¿µÄ²ãÒ»¶¨´óÓÚ(EXTERN_UP)»òĞ¡ÓÚ(EXTERN_DOWN)µ±Ç°ĞÅºÅ²ã
+* note:::::: ç”µæ¢¯åœ¨è¯»å–ä¿¡å·é›†æ—¶æ³¨æ„å¤„ç†ä»ä½•å¤„å¼€å§‹è¯»ä¿¡å·é›†ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼
+* è§„åˆ™ï¼šå¤–éƒ¨ä¿¡å·ç›®çš„å±‚ä¸€å®šå¤§äº(EXTERN_UP)æˆ–å°äº(EXTERN_DOWN)å½“å‰ä¿¡å·å±‚
 *
 */
-// ¼ÆËãÊÊÓ¦¶È
+// è®¡ç®—é€‚åº”åº¦
 void CalculateFitness(Elevators* pElevators, PassengerFLow* pPassengerFLow, BuildingParam* pBuildingParam, Signal* pSignal)
 {
 	float w1, w2, w3, w4;
@@ -842,7 +842,7 @@ void CalculateFitness(Elevators* pElevators, PassengerFLow* pPassengerFLow, Buil
 
 	for (int i = 0; i < POPULATION_SIZE; ++i)
 	{
-		// ¿½±´Ò»·İelevators
+		// æ‹·è´ä¸€ä»½elevators
 		Elevators tempElevator;
 		tempElevator.elevators = new ElevatorRealTimeParam[pElevators->numElevators];
 		tempElevator.numElevators = pElevators->numElevators;
@@ -850,17 +850,13 @@ void CalculateFitness(Elevators* pElevators, PassengerFLow* pPassengerFLow, Buil
 		{
 			tempElevator.elevators[n].elevatorParam = pElevators->elevators[n].elevatorParam;
 			tempElevator.elevators[n].elevatorStatus = pElevators->elevators[n].elevatorStatus;
-		} // ¿½±´Íê±Ï
+		} // æ‹·è´å®Œæ¯•
 		Elevators* pTempElevator = &tempElevator;
 
-		// ½«Ä¿±ê²ã¼ÓÈëdistFloors²¢¼ÆËãÊÊÓ¦¶È
+		// å°†ç›®æ ‡å±‚åŠ å…¥distFloorså¹¶è®¡ç®—é€‚åº”åº¦
 		for (int j = 0; j < pSignal->signalNum; ++j)
 		{
 			int index = nowPopulation.at(i).GetSequence()[j];
-			/*if (!IS_VALUE_IN_SECTION(index, 0, pSignal->externSignal.size() - 1))
-			{
-				index = nowPopulation.at(i).GetSequence()[j] = rand() % pSignal->externSignal.size();
-			}*/
 			assert(IS_VALUE_IN_SECTION(index, 0, pSignal->externSignal.size() - 1));
 			pTempElevator = InsertExternSignal(pTempElevator, nowPopulation.at(i).GetSequence(), j, pSignal, false);
 			fit = fit + CalculateWaitTime(pTempElevator, index, pBuildingParam) * w1 +
@@ -871,16 +867,16 @@ void CalculateFitness(Elevators* pElevators, PassengerFLow* pPassengerFLow, Buil
 			vector<DistFloor>().swap(pTempElevator->elevators[k].elevatorStatus.distFloors);
 		}
 		delete[] tempElevator.elevators;
-		//printf("%lf\n", fit); // ÓÃÓÚ²é¿´ÊÊÓ¦¶È±ä»¯Çé¿ö
+		//printf("%lf\n", fit); // ç”¨äºæŸ¥çœ‹é€‚åº”åº¦å˜åŒ–æƒ…å†µ
 		nowPopulation.at(i).SetFitness(fit);
 		fit = 0;
 	}
 }
 
-// ¼ÆËãÊÊÓ¦Öµ¸ÅÂÊ
+// è®¡ç®—é€‚åº”å€¼æ¦‚ç‡
 void CaculatePFitness()
 {
-	double sumFitness = 0; // ÊÊÓ¦¶ÈÀÛ¼ÆÖµ
+	double sumFitness = 0; // é€‚åº”åº¦ç´¯è®¡å€¼
 	double temp = 0;
 	for (int i = 0; i < POPULATION_SIZE; ++i)
 	{
@@ -893,10 +889,10 @@ void CaculatePFitness()
 	}
 }
 
-// ¼ÆËãÊÊÓ¦ÖµÀÛ¼ÆÖµ
+// è®¡ç®—é€‚åº”å€¼ç´¯è®¡å€¼
 void CaculateSumFitness()
 {
-	double summation = 0; // ÀÛ¼ÆÖµ
+	double summation = 0; // ç´¯è®¡å€¼
 	for (int i = 0; i < POPULATION_SIZE; ++i)
 	{
 		summation += nowPopulation.at(i).GetFitnessPro();
@@ -904,7 +900,7 @@ void CaculateSumFitness()
 	}
 }
 
-// Ñ¡Ôñ
+// é€‰æ‹©
 void Select()
 {
 	double maxFitness = nowPopulation.at(0).GetFitness();
@@ -922,16 +918,16 @@ void Select()
 		midPopulation.push_back(nowPopulation.at(maxId));
 	}
 	int NEWPOPULATIONSIZE = POPULATION_SIZE - POPULATION_SIZE / 4;
-	// ÓÃÀ´±£´æËæ»úÊı
+	// ç”¨æ¥ä¿å­˜éšæœºæ•°
 	double* arr = new double[NEWPOPULATIONSIZE];
-	//ÒıÇæ£¬Éú³ÉËæ»úĞòÁĞ
+	//å¼•æ“ï¼Œç”Ÿæˆéšæœºåºåˆ—
 	default_random_engine e(time(0));
 	uniform_real_distribution<double> u(0.0, 1.0);
 	for (int i = 0; i < NEWPOPULATIONSIZE; ++i)
 	{
 		arr[i] = u(e);
 	}
-	// ÂÖÅÌÑ¡Ôñ
+	// è½®ç›˜é€‰æ‹©
 	for (int i = 0; i < NEWPOPULATIONSIZE; ++i)
 	{
 		if (arr[i] < nowPopulation.at(0).GetFitnessSumPro())
@@ -954,22 +950,22 @@ void Select()
 	delete[]arr;
 }
 
-// ½»²æ»¥»»,²ÉÓÃÒ»µã½»²æ
+// äº¤å‰äº’æ¢,é‡‡ç”¨ä¸€ç‚¹äº¤å‰
 void Crossover(Signal* pSignal)
 {
-	int num = 0; // ¼ÇÂ¼´ÎÊı
-	int crossPos; // ¼ÇÂ¼½»²æÎ»ÖÃ
-	// ÁÙÊ±´¢´æ¸¸Ç×µÄ·ÃÎÊĞòÁĞ
+	int num = 0; // è®°å½•æ¬¡æ•°
+	int crossPos; // è®°å½•äº¤å‰ä½ç½®
+	// ä¸´æ—¶å‚¨å­˜çˆ¶äº²çš„è®¿é—®åºåˆ—
 	int* arr1 = new int[pSignal->signalNum];
-	// ÁÙÊ±´¢´æÄ¸Ç×µÄ·ÃÎÊĞòÁĞ
+	// ä¸´æ—¶å‚¨å­˜æ¯äº²çš„è®¿é—®åºåˆ—
 	int* arr2 = new int[pSignal->signalNum];
-	// ÓÃÓÚ´¢´æ½»²æ²úÉúµÄ¸öÌå
+	// ç”¨äºå‚¨å­˜äº¤å‰äº§ç”Ÿçš„ä¸ªä½“
 	int* newArr1 = new int[pSignal->signalNum];
 	int* newArr2 = new int[pSignal->signalNum];
 	Const constNum(pSignal->signalNum - 1);
 	default_random_engine e(time(0));
 	std::uniform_int_distribution<int> r(1, constNum.constNum);
-	// POPULATION_SIZE±ØĞëÎªÅ¼Êı
+	// POPULATION_SIZEå¿…é¡»ä¸ºå¶æ•°
 	while (num < POPULATION_SIZE - 1)
 	{
 		double randNum = random();
@@ -977,14 +973,14 @@ void Crossover(Signal* pSignal)
 		{
 			for (int i = 0; i < pSignal->signalNum; ++i)
 			{
-				// µÃµ½¸¸Ç×µÄ·ÃÎÊĞòÁĞ
+				// å¾—åˆ°çˆ¶äº²çš„è®¿é—®åºåˆ—
 				arr1[i] = midPopulation.at(num).GetSequence()[i];
-				// µÃµ½Ä¸Ç×µÄ·ÃÎÊĞòÁĞ
+				// å¾—åˆ°æ¯äº²çš„è®¿é—®åºåˆ—
 				arr2[i] = midPopulation.at(num + 1).GetSequence()[i];
 			}
-			// ²úÉú [1, pSigal->signalNum-1] Ëæ»úÊı
+			// äº§ç”Ÿ [1, pSigal->signalNum-1] éšæœºæ•°
 			crossPos = r(e);
-			// ÌáÈ¡½»²æĞòÁĞÆ¬¶Î
+			// æå–äº¤å‰åºåˆ—ç‰‡æ®µ
 			for (int n = 0; n < crossPos; ++n)
 			{
 				newArr1[n] = arr1[n];
@@ -1014,10 +1010,10 @@ void Crossover(Signal* pSignal)
 	delete[]newArr2;
 }
 
-// ±äÒì
+// å˜å¼‚
 void Mutation(Signal* pSignal)
 {
-	// ´æ·ÅÁ½¸ö½»»»µã
+	// å­˜æ”¾ä¸¤ä¸ªäº¤æ¢ç‚¹
 	int mutationPoint[2];
 	int temp;
 	for (int i = 0; i < POPULATION_SIZE; ++i)
@@ -1050,7 +1046,7 @@ void Mutation(Signal* pSignal)
 	nextPopulation.clear();
 }
 
-// ³õÊ¼ÎªÏòÉÏÔËĞĞ£¬µÚ¶ş²¿·ÖÎªextern_down£¬µ½¶¥²ãÍ£Ö¹Ê±£¬ĞèÒª¶ÔµçÌİĞÅºÅ¼¯½øĞĞ´¦Àí
+// åˆå§‹ä¸ºå‘ä¸Šè¿è¡Œï¼Œç¬¬äºŒéƒ¨åˆ†ä¸ºextern_downï¼Œåˆ°é¡¶å±‚åœæ­¢æ—¶ï¼Œéœ€è¦å¯¹ç”µæ¢¯ä¿¡å·é›†è¿›è¡Œå¤„ç†
 ElevatorRealTimeParam* ELevatorChange(ElevatorRealTimeParam* pElevators)
 {
 	int j = 0;
@@ -1070,16 +1066,18 @@ ElevatorRealTimeParam* ELevatorChange(ElevatorRealTimeParam* pElevators)
 	return pElevators;
 }
 
-// ÒÅ´«Ëã·¨×Üº¯Êı
+// é—ä¼ ç®—æ³•æ€»å‡½æ•°
 Dispatch GeneticAlgorithm(Elevators* pElevators, PassengerFLow* pPassengerFLow, BuildingParam* pBuildingParam, Signal* pSignal)
 {
-#ifdef DEBUG
-	// ²âÊÔÊ±¼ä
+	//#define TRT
+
+#ifdef TRT
+	// æµ‹è¯•æ—¶é—´
 	using namespace std::chrono;
 	steady_clock::time_point t1 = steady_clock::now();
 #endif // DEBUG
 	bool isOnlyOne = false;
-	// Ö»ÓĞÒ»¸öĞÅºÅÊ±£¬ĞèÒªÔö¼ÓÒ»¸öÏàÍ¬µÄĞÅºÅ
+	// åªæœ‰ä¸€ä¸ªä¿¡å·æ—¶ï¼Œéœ€è¦å¢åŠ ä¸€ä¸ªç›¸åŒçš„ä¿¡å·
 	if (pSignal->signalNum == 1)
 	{
 		pSignal->signalNum++;
@@ -1091,10 +1089,10 @@ Dispatch GeneticAlgorithm(Elevators* pElevators, PassengerFLow* pPassengerFLow, 
 		pSignal->externSignal.push_back(tempEx);
 	}
 	NUM_EVOLUTION = 150;
-	// ÁÙÊ±×î´óÊÊÓ¦Öµ
+	// ä¸´æ—¶æœ€å¤§é€‚åº”å€¼
 	double maxFit = 0;
 	volatile unsigned int index = 0;
-	// ³õÊ¼»¯£¬Éú³É³õÊ¼ÖÖÈº
+	// åˆå§‹åŒ–ï¼Œç”Ÿæˆåˆå§‹ç§ç¾¤
 	Initialize(pElevators, pSignal);
 	for (int i = 0; i < NUM_EVOLUTION; ++i)
 	{
@@ -1156,20 +1154,15 @@ Dispatch GeneticAlgorithm(Elevators* pElevators, PassengerFLow* pPassengerFLow, 
 		pSignal->externSignal.pop_back();
 		pElevators = InsertExternSignal(pElevators, nowPopulation.at(index).GetSequence(), 0, pSignal, false);
 	}
-
-	vector<Individual>().swap(nowPopulation);
-	vector<Individual>().swap(midPopulation);
-	vector<Individual>().swap(nextPopulation);
-	// Îö¹¹È«¾ÖÈİÆ÷±äÁ¿
-	nowPopulation.~vector();
-	midPopulation.~vector();
-	nextPopulation.~vector();
+	nowPopulation.clear();
+	midPopulation.clear();
+	nextPopulation.clear();
 	Dispatch ret;
 	ret.singleDispatch = temp;
 	ret.dispatchNum = pSignal->signalNum;
 	gaIsFinish = true;
-#ifdef DEBUG
-	// ²âÊÔÊ±¼ä
+#ifdef TRT
+	// æµ‹è¯•æ—¶é—´
 	steady_clock::time_point t2 = steady_clock::now();
 	duration<double> time_span = duration_cast<duration<double>>(t2 - t1);
 #endif // DEBUG
