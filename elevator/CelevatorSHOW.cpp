@@ -1,4 +1,4 @@
-﻿/*
+/*
  * @Author: 朱文裕、郑飞、罗飞杰
  * @File: CelevatorsSHOW.cpp
  * @Date: 2021-7-17
@@ -835,103 +835,85 @@ void CelevatorSHOW::OnPaint()
 	}
 	else
 	{
+		COLORREF bkg = RGB(240, 240, 240);
+
 		//CDialog::OnPaint();
 		//楼最底层
 		BuildingParam& buildingParam = globalData.GetBuildingParam();
-		CClientDC dc1(this);
-		CRect rect1;
-		GetClientRect(&rect1);
+		CClientDC dc(this);
+		CRect rect;
+		GetClientRect(&rect);
 		buildingParam.floors = globalData.GetBuildingParam().floors;
 		buildingParam.numOfElevator = globalData.GetBuildingParam().numOfElevator;
-		CDC dcMem1;
-		dcMem1.CreateCompatibleDC(&dc1);
-		CBitmap bmpBackground1;
-		bmpBackground1.LoadBitmap(IDB_BITMAP7);
+		CDC dcMem;
+		dcMem.CreateCompatibleDC(&dc);
+		CBitmap bmpBackground;
+		bmpBackground.LoadBitmap(IDB_BITMAP7);
 		BITMAP bitmap;
-		bmpBackground1.GetBitmap(&bitmap);
-		CBitmap* pbmpOld1 = dcMem1.SelectObject(&bmpBackground1);
+		bmpBackground.GetBitmap(&bitmap);
+		CBitmap* pbmpOld1 = dcMem.SelectObject(&bmpBackground);
 		int times = buildingParam.floors / 10 + 1;
 		if (buildingParam.floors < 10 && buildingParam.numOfElevator>10)times = 2;
 		for (int i = 1; i <= buildingParam.numOfElevator; i++)
 		{
-			dc1.StretchBlt(rect1.Width() / (buildingParam.numOfElevator + 1) * i + 50 / times, rect1.Height() - 90 / times, 160 / times, 90 / times, &dcMem1, 0, 0, bitmap.bmWidth, bitmap.bmHeight, SRCCOPY);
+			dc.StretchBlt(rect.Width() / (buildingParam.numOfElevator + 1) * i + 50 / times, rect.Height() - 90 / times, 160 / times, 90 / times, &dcMem, 0, 0, bitmap.bmWidth, bitmap.bmHeight, SRCCOPY);
 		}
-		DeleteObject(bmpBackground1);
+		DeleteObject(bmpBackground);
 		DeleteObject(pbmpOld1);
-		//楼身体
-		CClientDC dc2(this);
-		CRect rect2;
-		GetClientRect(&rect2);
-		CDC dcMem2;
-		dcMem2.CreateCompatibleDC(&dc2);
-		CBitmap bmpBackground2;
-		bmpBackground2.LoadBitmap(IDB_BITMAP5);
-		bmpBackground2.GetBitmap(&bitmap);
-		CBitmap* pbmpOld2 = dcMem2.SelectObject(&bmpBackground2);
+		//楼体
+		bmpBackground.LoadBitmap(IDB_BITMAP5);
+		bmpBackground.GetBitmap(&bitmap);
+		CBitmap* pbmpOld2 = dcMem.SelectObject(&bmpBackground);
 		for (int j = 1; j < buildingParam.numOfElevator + 1; j++)
 		{
 			for (int m = 2; m <= buildingParam.floors; m++)
 			{
-				dc2.StretchBlt(rect2.Width() / (buildingParam.numOfElevator + 1) * j + 50 / times, rect2.Height() - 90 / times * m, 100 / times, 90 / times, &dcMem2, 0, 0, bitmap.bmWidth, bitmap.bmHeight, SRCCOPY);
+				dc.StretchBlt(rect.Width() / (buildingParam.numOfElevator + 1) * j + 50 / times, rect.Height() - 90 / times * m, 100 / times, 90 / times, &dcMem, 0, 0, bitmap.bmWidth, bitmap.bmHeight, SRCCOPY);
 			}
 		}
-		DeleteObject(bmpBackground2);
 		DeleteObject(pbmpOld2);
 		//楼顶
-		CClientDC dc3(this);
-		CRect rect3;
-		GetClientRect(&rect3);
-		CDC dcMem3;
-		dcMem3.CreateCompatibleDC(&dc3);
-		CBitmap bmpBackground3;
-		bmpBackground3.LoadBitmap(IDB_BITMAP6);
-		bmpBackground3.GetBitmap(&bitmap);
-		CBitmap* pbmpOld3 = dcMem3.SelectObject(&bmpBackground3);
+		bmpBackground.LoadBitmap(IDB_BITMAP6);
+		bmpBackground.GetBitmap(&bitmap);
+		CBitmap* pbmpOld3 = dcMem.SelectObject(&bmpBackground);
 		for (int k = 1; k <= buildingParam.numOfElevator; k++)
 		{
-			dc3.StretchBlt(rect3.Width() / (buildingParam.numOfElevator + 1) * k + 50 / times, rect3.Height() - 90 / times * buildingParam.floors - 40 / times, 160 / times, 40 / times, &dcMem3, 0, 0, bitmap.bmWidth, bitmap.bmHeight, SRCCOPY);
+			dc.StretchBlt(rect.Width() / (buildingParam.numOfElevator + 1) * k + 50 / times, rect.Height() - 90 / times * buildingParam.floors - 40 / times, 160 / times, 40 / times, &dcMem, 0, 0, bitmap.bmWidth, bitmap.bmHeight, SRCCOPY);
 		}
-		DeleteObject(bmpBackground3);
+		DeleteObject(bmpBackground);
 		DeleteObject(pbmpOld3);
+
 		//电梯安置
-		CClientDC dc4(this);
-		CRect rect4;
-		GetClientRect(&rect4);
-		CDC dcMem4;
-		dcMem4.CreateCompatibleDC(&dc4);
-		CBitmap bmpBackground4;
-		bmpBackground4.LoadBitmap(IDB_BITMAP8);
-		bmpBackground4.GetBitmap(&bitmap);
-		CBitmap* pbmpOld4 = dcMem4.SelectObject(&bmpBackground4);
+		bmpBackground.LoadBitmap(IDB_BITMAP8);
+		bmpBackground.GetBitmap(&bitmap);
+		CBitmap* pbmpOld4 = dcMem.SelectObject(&bmpBackground);
 		for (int num = 1; num <= buildingParam.numOfElevator; num++)
 		{
 			float shishilouceng = elePos[num - 1] + 1;//替换为下一行
 
-			CClientDC dc10(this);
-
 			// 将原来的像素覆盖
 			CPen rePen(PS_SOLID, 40 / times, RGB(240, 240, 240));
-			CPen* rePrt = dc10.SelectObject(&rePen);
-			dc10.MoveTo(rect4.Width() / (buildingParam.numOfElevator + 1) * num + 170 / times, rect4.Height() - 90 / times * 1 - 6);
-			dc10.LineTo(rect4.Width() / (buildingParam.numOfElevator + 1) * num + 170 / times, rect4.Height() - 90 / times * buildingParam.floors);
-			dc10.SelectObject(rePrt);
+			CPen* rePrt = dc.SelectObject(&rePen);
+			dc.MoveTo(rect.Width() / (buildingParam.numOfElevator + 1) * num + 170 / times, rect.Height() - 90 / times * 1 - 6);
+			dc.LineTo(rect.Width() / (buildingParam.numOfElevator + 1) * num + 170 / times, rect.Height() - 90 / times * buildingParam.floors);
+			dc.SelectObject(rePrt);
 
-			dc4.StretchBlt(rect4.Width() / (buildingParam.numOfElevator + 1) * num + 150 / times, rect4.Height() - 90 / times * shishilouceng, 40 / times, 65 / times, &dcMem4, 0, 0, bitmap.bmWidth, bitmap.bmHeight, SRCCOPY);
+			dc.StretchBlt(rect.Width() / (buildingParam.numOfElevator + 1) * num + 150 / times, rect.Height() - 90 / times * shishilouceng, 40 / times, 65 / times, &dcMem, 0, 0, bitmap.bmWidth, bitmap.bmHeight, SRCCOPY);
 
 			CPen pen(PS_SOLID, 5, RGB(255, 0, 0));
-			CPen* ptr = dc10.SelectObject(&pen);
-			dc10.MoveTo(rect4.Width() / (buildingParam.numOfElevator + 1) * num + 170 / times, rect4.Height() - 90 / times * shishilouceng);
-			dc10.LineTo(rect4.Width() / (buildingParam.numOfElevator + 1) * num + 170 / times, rect4.Height() - 90 / times * buildingParam.floors);
-			dc10.SelectObject(ptr);
+			CPen* ptr = dc.SelectObject(&pen);
+			dc.MoveTo(rect.Width() / (buildingParam.numOfElevator + 1) * num + 170 / times, rect.Height() - 90 / times * shishilouceng);
+			dc.LineTo(rect.Width() / (buildingParam.numOfElevator + 1) * num + 170 / times, rect.Height() - 90 / times * buildingParam.floors);
+			dc.SelectObject(ptr);
 		}
-		DeleteObject(bmpBackground4);
+		DeleteObject(bmpBackground);
 		DeleteObject(pbmpOld4);
 
-		CClientDC dc(this);
 		CFont font;
 		font.CreatePointFont(160, _T("黑体"));
 		CFont* def_font = dc.SelectObject(&font);
-		dc.TextOut(50 / times, rect4.Height() - 90 / times * (buildingParam.floors + 1) - 60, _T("楼层"));//大字电梯楼层
+		dc.SetBkColor(bkg);
+		dc.TextOut(50 / times, rect.Height() - 90 / times * (buildingParam.floors + 1) - 60, _T("楼层"));//大字电梯楼层
 
 		//楼层数
 		dc.SelectObject(def_font);
@@ -942,7 +924,7 @@ void CelevatorSHOW::OnPaint()
 			CFont font;
 			font.CreatePointFont(120, _T("黑体"));
 			CFont* def_font = dc.SelectObject(&font);
-			dc.TextOut(50 / times, rect4.Height() - 90 / times * i, str);
+			dc.TextOut(50 / times, rect.Height() - 90 / times * i, str);
 			DeleteObject(font);
 			DeleteObject(def_font);
 		}
@@ -950,30 +932,23 @@ void CelevatorSHOW::OnPaint()
 		for (int i = 1; i <= buildingParam.numOfElevator; i++)
 		{
 			int diantiyunxinggaodu = globalData.GetElevators().elevators[i - 1].elevatorStatus.presentFloor + 1;//此变量到时候替换为每一栋大楼目前电梯运行到的楼层数,电梯编号为第i号到buildingParam
-			CClientDC dc10(this);
 			// 将原来的像素覆盖
 			CPen rePen(PS_SOLID, 70, RGB(240, 240, 240));
-			CPen* rePrt = dc10.SelectObject(&rePen);
-			dc10.MoveTo(rect4.Width() / (buildingParam.numOfElevator + 1) * i + 100 / times, rect4.Height() - 90 / times * (buildingParam.floors + 1) - 60);
-			dc10.LineTo(rect4.Width() / (buildingParam.numOfElevator + 1) * i + 100 / times + 30, rect4.Height() - 90 / times * (buildingParam.floors + 1) - 60);
-			dc10.SelectObject(rePrt);
+			CPen* rePrt = dc.SelectObject(&rePen);
+			dc.MoveTo(rect.Width() / (buildingParam.numOfElevator + 1) * i + 100 / times, rect.Height() - 90 / times * (buildingParam.floors + 1) - 60);
+			dc.LineTo(rect.Width() / (buildingParam.numOfElevator + 1) * i + 100 / times + 30, rect.Height() - 90 / times * (buildingParam.floors + 1) - 60);
+			dc.SelectObject(rePrt);
 			str.Format(_T("%d"), diantiyunxinggaodu);
 			CFont font;
 			font.CreatePointFont(160, _T("黑体"));
 			CFont* def_font = dc.SelectObject(&font);
-			dc.TextOut(rect4.Width() / (buildingParam.numOfElevator + 1) * i + 100 / times, rect4.Height() - 90 / times * (buildingParam.floors + 1) - 60, str);
+			dc.TextOut(rect.Width() / (buildingParam.numOfElevator + 1) * i + 100 / times, rect.Height() - 90 / times * (buildingParam.floors + 1) - 60, str);
 			DeleteObject(font);
 			DeleteObject(def_font);
 		}
-		CClientDC dc5(this);
-		CRect rect5;
-		GetClientRect(&rect5);
-		CDC dcMem5;
-		dcMem5.CreateCompatibleDC(&dc5);
-		CBitmap bmpBackground5;
-		bmpBackground5.LoadBitmap(IDB_BITMAP9);
-		bmpBackground5.GetBitmap(&bitmap);
-		CBitmap* pbmpOld5 = dcMem5.SelectObject(&bmpBackground5);
+		bmpBackground.LoadBitmap(IDB_BITMAP9);
+		bmpBackground.GetBitmap(&bitmap);
+		CBitmap* pbmpOld5 = dcMem.SelectObject(&bmpBackground);
 
 		for (int i = 1; i <= buildingParam.floors; i++)
 		{
@@ -983,19 +958,14 @@ void CelevatorSHOW::OnPaint()
 			{
 				continue;
 			}
-			else dc5.StretchBlt(150 / times, rect5.Height() - 90 / times * i, 40 / times, 40 / times, &dcMem5, 0, 0, bitmap.bmWidth, bitmap.bmHeight, SRCCOPY);
+			else dc.StretchBlt(150 / times, rect.Height() - 90 / times * i, 40 / times, 40 / times, &dcMem, 0, 0, bitmap.bmWidth, bitmap.bmHeight, SRCCOPY);
 		}
-		DeleteObject(bmpBackground5);
+		DeleteObject(bmpBackground);
 		DeleteObject(pbmpOld5);
-		CClientDC dc6(this);
-		CRect rect6;
-		GetClientRect(&rect6);
-		CDC dcMem6;
-		dcMem6.CreateCompatibleDC(&dc6);
-		CBitmap bmpBackground6;
-		bmpBackground6.LoadBitmap(IDB_BITMAP10);
-		bmpBackground6.GetBitmap(&bitmap);
-		CBitmap* pbmpOld6 = dcMem6.SelectObject(&bmpBackground6);
+
+		bmpBackground.LoadBitmap(IDB_BITMAP10);
+		bmpBackground.GetBitmap(&bitmap);
+		CBitmap* pbmpOld6 = dcMem.SelectObject(&bmpBackground);
 		for (int i = 1; i <= buildingParam.floors; i++)
 		{
 			auto iter = std::find(DownGreenLight.begin(), DownGreenLight.end(), i - 1);
@@ -1003,19 +973,14 @@ void CelevatorSHOW::OnPaint()
 			{
 				continue;
 			}//此处下行白灯
-			else dc6.StretchBlt(200 / times, rect6.Height() - 90 / times * i, 40 / times, 40 / times, &dcMem6, 0, 0, bitmap.bmWidth, bitmap.bmHeight, SRCCOPY);
+			else dc.StretchBlt(200 / times, rect.Height() - 90 / times * i, 40 / times, 40 / times, &dcMem, 0, 0, bitmap.bmWidth, bitmap.bmHeight, SRCCOPY);
 		}
-		DeleteObject(bmpBackground6);
+		DeleteObject(bmpBackground);
 		DeleteObject(pbmpOld6);
-		CClientDC dc7(this);
-		CRect rect7;
-		GetClientRect(&rect7);
-		CDC dcMem7;
-		dcMem7.CreateCompatibleDC(&dc7);
-		CBitmap bmpBackground7;
-		bmpBackground7.LoadBitmap(IDB_BITMAP12);
-		bmpBackground7.GetBitmap(&bitmap);
-		CBitmap* pbmpOld7 = dcMem7.SelectObject(&bmpBackground7);
+
+		bmpBackground.LoadBitmap(IDB_BITMAP12);
+		bmpBackground.GetBitmap(&bitmap);
+		CBitmap* pbmpOld7 = dcMem.SelectObject(&bmpBackground);
 		for (int i = 1; i <= buildingParam.floors; i++)
 		{
 			auto iter = std::find(UpGreenLight.begin(), UpGreenLight.end(), i - 1);
@@ -1025,20 +990,15 @@ void CelevatorSHOW::OnPaint()
 			}
 			else
 			{
-				dc7.StretchBlt(150 / times, rect7.Height() - 90 / times * i, 40 / times, 40 / times, &dcMem7, 0, 0, bitmap.bmWidth, bitmap.bmHeight, SRCCOPY);//此处为亮灯楼层
+				dc.StretchBlt(150 / times, rect.Height() - 90 / times * i, 40 / times, 40 / times, &dcMem, 0, 0, bitmap.bmWidth, bitmap.bmHeight, SRCCOPY);//此处为亮灯楼层
 			};//上行绿灯
 		}
-		DeleteObject(bmpBackground7);
+		DeleteObject(bmpBackground);
 		DeleteObject(pbmpOld7);
-		CClientDC dc8(this);
-		CRect rect8;
-		GetClientRect(&rect8);
-		CDC dcMem8;
-		dcMem8.CreateCompatibleDC(&dc8);
-		CBitmap bmpBackground8;
-		bmpBackground8.LoadBitmap(IDB_BITMAP11);
-		bmpBackground8.GetBitmap(&bitmap);
-		CBitmap* pbmpOld8 = dcMem8.SelectObject(&bmpBackground8);
+
+		bmpBackground.LoadBitmap(IDB_BITMAP11);
+		bmpBackground.GetBitmap(&bitmap);
+		CBitmap* pbmpOld8 = dcMem.SelectObject(&bmpBackground);
 		for (int i = 1; i <= buildingParam.floors; i++)
 		{
 			auto iter = std::find(DownGreenLight.begin(), DownGreenLight.end(), i - 1);
@@ -1047,9 +1007,12 @@ void CelevatorSHOW::OnPaint()
 				continue;
 			}
 			else
-				dc8.StretchBlt(200 / times, rect8.Height() - 90 / times * i, 40 / times, 40 / times, &dcMem8, 0, 0, bitmap.bmWidth, bitmap.bmHeight, SRCCOPY);//此处为亮灯楼层;//下行绿灯
+				dc.StretchBlt(200 / times, rect.Height() - 90 / times * i, 40 / times, 40 / times, &dcMem, 0, 0, bitmap.bmWidth, bitmap.bmHeight, SRCCOPY);//此处为亮灯楼层;//下行绿灯
 		}
-		DeleteObject(bmpBackground8);
+		ReleaseDC(&dcMem);
+		ReleaseDC(&dc);
+		DeleteObject(rect);
+		DeleteObject(bmpBackground);
 		DeleteObject(pbmpOld8);
 	}
 }
