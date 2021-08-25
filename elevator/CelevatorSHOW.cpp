@@ -2,7 +2,7 @@
  * @Author: 朱文裕、郑飞、罗飞杰
  * @File: CelevatorsSHOW.cpp
  * @Date: 2021-7-17
- * @LastEditTime: 2021-7-26
+ * @LastEditTime: 2021-8-25
  * @LastEditors: 罗飞杰
  * @brief: 电梯动态运行画面绘制及控制
  */
